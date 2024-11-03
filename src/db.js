@@ -150,21 +150,8 @@ export function createLogin() {
   client.query(`
     CREATE TABLE IF NOT EXISTS login (
     user_id INT GENERATED ALWAYS AS IDENTITY,
-    jelszo VARCHAR(100),
-
-    PRIMARY KEY (user_id),
-
-     CONSTRAINT fk_user_id 
-    FOREIGN KEY (user_id)
-    REFERENCES Felhasznalok (id)
+    jelszo VARCHAR(100)
   )`)
-}
-
-export async function addLogin(user_id, jelszo) {
-  await client.query(`
-    INSERT INTO login (user_id, jelszo)
-    VALUES (${user_id}, '${jelszo}')
-    `)
 }
 
 export async function getLogin(user_id) {
@@ -173,6 +160,13 @@ export async function getLogin(user_id) {
         WHERE user_id = ${user_id}
         `)
   return users.rows
+}
+
+export async function addLogin(jelszo) {
+  await client.query(`
+    INSERT INTO login
+    VALUES (default, '${jelszo}')
+    `)
 }
 
 export async function updateLogin(user_id, jelszo) {

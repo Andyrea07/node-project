@@ -2,13 +2,22 @@ import { getLogin, addLogin, updateLogin, deleteLogin } from '../db.js'
 import bcrypt from 'bcrypt'
 import Joi from 'joi'
 
+const addRule = Joi.object({
+  jelszo: Joi.string().required()
+})
+
 async function GetLogin(req, res) {
   res.send(await getLogin())
 }
 
 async function AddLogin(req, res) {
-  const { user_id, jelszo } = req.body
-  res.send(await addLogin(user_id, jelszo))
+  try {
+    const { jelszo } = await addRule.validateAsync(req.body)
+    await addLogin(jelszo)
+    res.send('Megerkezett a valasz')
+  } catch (error) {
+    res.status(400).send(error)
+  }
 }
 
 async function UpdateLogin(req, res) {
