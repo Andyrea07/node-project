@@ -56,10 +56,10 @@ export async function getCikkek() {
   return cikkek.rows
 }
 
-export async function updateCikkek(CikkID, CikkCim) {
+export async function updateCikkek(CikkCim, CikkID) {
   const cikkek = await client.query(`
     UPDATE Cikkek
-    SET CikkCim = ${CikkCim}
+    SET CikkCim = '${CikkCim}'
     WHERE CikkID = ${CikkID}
     `)
   return cikkek.rows
@@ -144,4 +144,49 @@ export async function deleteCategory(kategoriaid) {
     WHERE kategoriaid = ${kategoriaid}
     `)
   return category.rows
+}
+
+export function createLogin() {
+  client.query(`
+    CREATE TABLE IF NOT EXISTS login (
+    user_id INT GENERATED ALWAYS AS IDENTITY,
+    jelszo VARCHAR(100),
+
+    PRIMARY KEY (user_id),
+
+     CONSTRAINT fk_user_id 
+    FOREIGN KEY (user_id)
+    REFERENCES Felhasznalok (id)
+  )`)
+}
+
+export async function addLogin(user_id, jelszo) {
+  await client.query(`
+    INSERT INTO login (user_id, jelszo)
+    VALUES (${user_id}, '${jelszo}')
+    `)
+}
+
+export async function getLogin(user_id) {
+  const users = await client.query(`
+        SELECT * FROM login
+        WHERE user_id = ${user_id}
+        `)
+  return users.rows
+}
+
+export async function updateLogin(user_id, jelszo) {
+  const login = await client.query(`
+    SET jelszo = '${jelszo}'
+    WHERE user_id = ${user_id}
+    `)
+  return login.rows
+}
+
+export async function deleteLogin(user_id) {
+  const login = await client.query(`
+    DELETE FROM login
+    WHERE user_id = ${user_id}
+    `)
+  return login.rows
 }

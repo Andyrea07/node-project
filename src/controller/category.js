@@ -7,14 +7,24 @@ import {
   deleteCategory
 } from '../db.js'
 
+import Joi from 'joi'
+
+const addRule = Joi.object({
+  kategorianev: Joi.string().required()
+})
+
 async function GetCategory(req, res) {
   res.send(await getCategory())
 }
 
 async function AddCategory(req, res) {
-  const { kategorianev } = req.body
-  await addCategory(kategorianev)
-  res.send('Kategoria hozzáadás')
+  try {
+    const { kategorianev } = await addRule.validateAsync(req.body)
+    await addCategory(kategorianev)
+    res.send('Kategoria hozzáadás')
+  } catch (error) {
+    res.status(400).send(error)
+  }
 }
 
 async function UpdateCategory(req, res) {

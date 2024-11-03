@@ -8,8 +8,7 @@ const addRule = Joi.object({
 })
 
 const updateRule = Joi.object({
-  CikkCim: Joi.string().required().min(3),
-  CikkID: Joi.number().required()
+  CikkCim: Joi.string().required().min(3)
 })
 
 async function GetArticle(req, res) {
@@ -28,7 +27,8 @@ async function AddArticle(req, res) {
 
 async function UpdateArticle(req, res) {
   try {
-    const { CikkCim, CikkID } = await updateRule.validateAsync(req.body)
+    const { CikkCim } = await updateRule.validateAsync(req.body)
+    const { CikkID } = req.params
     await updateCikkek(CikkCim, CikkID)
     res.send('Frissitettem a cikket')
   } catch (error) {

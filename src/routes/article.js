@@ -7,6 +7,6 @@ articleRouter.get('/', articleController.GetArticle)
 
 articleRouter.post('/', articleController.AddArticle)
 
-articleRouter.put('/', articleController.UpdateArticle)
+articleRouter.put('/:CikkID', articleController.UpdateArticle)
 
 articleRouter.delete('/:CikkID', articleController.DeleteArticle)
