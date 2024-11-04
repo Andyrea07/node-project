@@ -3,7 +3,8 @@ import bcrypt from 'bcrypt'
 import Joi from 'joi'
 
 const addRule = Joi.object({
-  jelszo: Joi.string().required()
+  jelszo: Joi.string().required(),
+  passwordConfirm: Joi.string().required()
 })
 
 async function GetLogin(req, res) {
@@ -12,8 +13,15 @@ async function GetLogin(req, res) {
 
 async function AddLogin(req, res) {
   try {
-    const { jelszo } = await addRule.validateAsync(req.body)
-    await addLogin(jelszo)
+    const { jelszo, passwordConfirm } = await addRule.validateAsync(req.body)
+    const secretpass = await bcrypt.hash(jelszo, 10)
+
+    const same = await bcrypt.compare(passwordConfirm, secretpass)
+    if (!same) {
+      res.status(400).send('Not the same password')
+      return
+    }
+    await addLogin(secretpass)
     res.send('Megerkezett a valasz')
   } catch (error) {
     res.status(400).send(error)

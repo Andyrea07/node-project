@@ -154,10 +154,9 @@ export function createLogin() {
   )`)
 }
 
-export async function getLogin(user_id) {
+export async function getLogin() {
   const users = await client.query(`
         SELECT * FROM login
-        WHERE user_id = ${user_id}
         `)
   return users.rows
 }
@@ -171,6 +170,7 @@ export async function addLogin(jelszo) {
 
 export async function updateLogin(user_id, jelszo) {
   const login = await client.query(`
+    UPDATE login
     SET jelszo = '${jelszo}'
     WHERE user_id = ${user_id}
     `)
