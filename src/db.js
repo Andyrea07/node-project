@@ -150,7 +150,13 @@ export function createLogin() {
   client.query(`
     CREATE TABLE IF NOT EXISTS login (
     user_id INT GENERATED ALWAYS AS IDENTITY,
-    jelszo VARCHAR(100)
+    jelszo VARCHAR(100),
+
+    PRIMARY KEY (user_id),
+
+    CONSTRAINT fk_userID
+    FOREIGN KEY (user_id)
+    REFERENCES Felhasznalok(id)
   )`)
 }
 
