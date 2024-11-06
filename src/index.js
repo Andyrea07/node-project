@@ -1,17 +1,21 @@
 import express from 'express'
-import { createCikkek, createLogin, createUser } from './db.js'
+import { createUser } from './db data/user.js'
+import { createCikkek } from './db data/articles.js'
+import { createLogin } from './db data/auth.js'
 import morgan from 'morgan'
 import bodyParser from 'body-parser'
 import { userRouter } from './routes/user.js'
-import { category } from './db.js'
+import { category } from './db data/category.js'
 import { categoryRouter } from './routes/category.js'
 import { articleRouter } from './routes/article.js'
 import { loginRouter } from './routes/auth.js'
+import cors from 'cors'
 
 const app = express()
 
 const port = 3000
 
+app.use(cors())
 app.use(bodyParser.json())
 app.use(morgan('dev'))
 

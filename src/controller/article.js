@@ -1,15 +1,11 @@
-import { getCikkek, addCikkek, updateCikkek, deleteCikkek } from '../db.js'
-import Joi from 'joi'
-
-const addRule = Joi.object({
-  CikkCim: Joi.string().required().min(3),
-  Szoveg: Joi.string().required().min(5).max(100),
-  SzerzoID: Joi.number().required()
-})
-
-const updateRule = Joi.object({
-  CikkCim: Joi.string().required().min(3)
-})
+import {
+  getCikkek,
+  addCikkek,
+  updateCikkek,
+  deleteCikkek
+} from '../db data/articles.js'
+import { addRule } from '../validators/article.js'
+import { updateRule } from '../validators/article.js'
 
 async function GetArticle(req, res) {
   res.send(await getCikkek())

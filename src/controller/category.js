@@ -1,17 +1,12 @@
 //GETCATEGORY, ADDCATEGORY, UPDATECATEGORY, DELETECATEGORY
-
 import {
   getCategory,
   addCategory,
   updateCategory,
   deleteCategory
-} from '../db.js'
+} from '../db data/category.js'
 
-import Joi from 'joi'
-
-const addRule = Joi.object({
-  kategorianev: Joi.string().required()
-})
+import { addRule } from '../validators/category.js'
 
 async function GetCategory(req, res) {
   res.send(await getCategory())

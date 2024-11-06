@@ -11,3 +11,5 @@ categoryRouter.post('/', categoryController.AddCategory)
 categoryRouter.put('/:kategoriaid', categoryController.UpdateCategory)
 
 categoryRouter.delete('/:kategoriaid', categoryController.DeleteCategory)
+
+//Ctrl+D(ha mindegyiket egyszerre akarom 'tirni)

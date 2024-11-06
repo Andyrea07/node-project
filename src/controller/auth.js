@@ -1,11 +1,11 @@
-import { getLogin, addLogin, updateLogin, deleteLogin } from '../db.js'
+import {
+  getLogin,
+  addLogin,
+  updateLogin,
+  deleteLogin
+} from '../db data/auth.js'
 import bcrypt from 'bcrypt'
-import Joi from 'joi'
-
-const addRule = Joi.object({
-  jelszo: Joi.string().required(),
-  passwordConfirm: Joi.string().required()
-})
+import { addRule } from '../validators/auth.js'
 
 async function GetLogin(req, res) {
   res.send(await getLogin())
